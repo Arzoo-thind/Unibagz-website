@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Unibagz Print</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+header{
+background:black;
+color:white;
+padding:18px;
+text-align:center;
+font-size:22px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.products{
+display:flex;
+flex-wrap:wrap;
+gap:25px;
+justify-content:center;
+}
+
+.card{
+background:white;
+width:250px;
+border-radius:10px;
+padding:15px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card img{
+width:100%;
+border-radius:8px;
+}
+
+.price{
+font-size:18px;
+font-weight:bold;
+margin:10px 0;
+}
+
+button{
+background:black;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#333;
+}
+
+.cartbar{
+position:fixed;
+bottom:0;
+width:100%;
+background:white;
+padding:15px;
+box-shadow:0 -2px 10px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.checkout{
+background:#00b386;
+font-size:16px;
+padding:12px 25px;
+border-radius:8px;
+margin-top:8px;
+}
+
+</style>
+
+<script>
+
+function addToCart(name,price){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+cart.push({name:name,price:price})
+
+localStorage.setItem("cart",JSON.stringify(cart))
+
+updateCart()
+
+alert("Item added to cart")
+
+}
+
+function updateCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+document.getElementById("cartCount").innerText = cart.length
+
+let total = 0
+
+cart.forEach(item=>{
+total += item.price
+})
+
+document.getElementById("totalPrice").innerText = total
+
+}
+
+window.onload = updateCart
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+UNIBAGZ PRINT
+</header>
+
+<div class="container">
+
+<h2 style="text-align:center">Printed Tote Bags</h2>
+
+<div class="products">
+
+<div class="card">
+
+<img src="bag1.jpg">
+
+<h3>Printed Tote Bag</h3>
+
+<div class="price">₹699</div>
+
+<button onclick="addToCart('Printed Tote Bag',699)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="card">
+
+<img src="bag2.jpg">
+
+<h3>Custom Printed Bag</h3>
+
+<div class="price">₹699</div>
+
+<button onclick="addToCart('Custom Printed Bag',699)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="card">
+
+<img src="bag3.jpg">
+
+<h3>Art Printed Bag</h3>
+
+<div class="price">₹699</div>
+
+<button onclick="addToCart('Art Printed Bag',699)">
+Add to Cart
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="cartbar">
+
+Items in Cart: <b id="cartCount">0</b>
+
+<br>
+
+Total: ₹<b id="totalPrice">0</b>
+
+<br>
+
+<a href="checkout.html">
+<button class="checkout">Proceed to Checkout</button>
+</a>
+
+</div>
+
+</body>
+
+</html>

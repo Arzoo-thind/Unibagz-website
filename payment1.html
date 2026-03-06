@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Payment | Unibagz Print</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+text-align:center;
+padding:50px;
+}
+
+.box{
+background:white;
+padding:30px;
+width:400px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:15px 25px;
+background:#00b386;
+color:white;
+border:none;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+function loadTotal(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+let total = 0
+
+cart.forEach(item=>{
+total += item.price * (item.qty || 1)
+})
+
+document.getElementById("amount").innerText = total
+
+window.totalAmount = total
+
+}
+
+function payNow(){
+
+var options = {
+
+"key": "YOUR_KEY_ID",
+
+"amount": window.totalAmount * 100,
+
+"currency": "INR",
+
+"name": "Unibagz Print",
+
+"description": "Tote Bag Purchase",
+
+"handler": function (response){
+
+alert("Payment Successful")
+
+localStorage.removeItem("cart")
+
+window.location.href = "payment-success.html"
+
+},
+
+"theme": {
+"color": "#00b386"
+}
+
+};
+
+var rzp = new Razorpay(options);
+
+rzp.open();
+
+}
+
+window.onload = loadTotal
+
+</script>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Complete Your Payment</h2>
+
+<h1>₹ <span id="amount">0</span></h1>
+
+<p>Secure payment powered by Razorpay</p>
+
+<button onclick="payNow()">Pay Now</button>
+
+</div>
+
+</body>
+
+</html>

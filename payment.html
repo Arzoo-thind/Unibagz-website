@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Payment | Unibagz Print</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+margin:0;
+}
+
+.header{
+background:black;
+color:white;
+padding:15px;
+text-align:center;
+font-size:20px;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+margin-bottom:20px;
+}
+
+.pay-option{
+border:2px solid #ddd;
+padding:12px;
+border-radius:8px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.pay-option.active{
+border-color:#00b386;
+background:#eafaf4;
+}
+
+.payment-box{
+margin-top:15px;
+padding:15px;
+background:#fafafa;
+border-radius:8px;
+display:none;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#00b386;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
+
+</style>
+
+<script>
+
+function loadPayment(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+let total = 0
+
+cart.forEach(item=>{
+total += item.price * (item.qty || 1)
+})
+
+document.getElementById("totalAmount").innerText = total
+document.getElementById("payButton").innerText = "Pay ₹" + total
+
+}
+
+function selectPayment(type){
+
+document.querySelectorAll(".pay-option").forEach(p=>{
+p.classList.remove("active")
+})
+
+document.querySelectorAll(".payment-box").forEach(b=>{
+b.style.display="none"
+})
+
+document.getElementById(type+"Option").classList.add("active")
+document.getElementById(type+"Box").style.display="block"
+
+}
+
+window.onload = loadPayment
+
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+Secure Payment
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Total Amount</h3>
+
+<h2>₹<span id="totalAmount">0</span></h2>
+
+</div>
+
+
+<div class="card">
+
+<h3>Select Payment Method</h3>
+
+<div id="upiOption" class="pay-option" onclick="selectPayment('upi')">
+UPI (Google Pay / PhonePe / Paytm)
+</div>
+
+<div id="cardOption" class="pay-option" onclick="selectPayment('card')">
+Credit / Debit Card
+</div>
+
+<div id="codOption" class="pay-option" onclick="selectPayment('cod')">
+Cash on Delivery
+</div>
+
+
+<!-- UPI PAYMENT -->
+
+<div id="upiBox" class="payment-box">
+
+<p>Scan QR to pay</p>
+
+<img src="qr.png" width="200">
+
+<p>UPI ID: <b>gunnuthind79@oksbi</b></p>
+
+</div>
+
+
+<!-- CARD PAYMENT -->
+
+<div id="cardBox" class="payment-box">
+
+<input type="text" placeholder="Card Number" style="width:100%;padding:10px;margin-bottom:10px">
+
+<input type="text" placeholder="Card Holder Name" style="width:100%;padding:10px;margin-bottom:10px">
+
+<input type="text" placeholder="Expiry MM/YY" style="width:100%;padding:10px;margin-bottom:10px">
+
+<input type="text" placeholder="CVV" style="width:100%;padding:10px">
+
+</div>
+
+
+<!-- COD PAYMENT -->
+
+<div id="codBox" class="payment-box">
+
+You will pay the amount on delivery.
+
+</div>
+
+<a href="paymentsucces.html">
+<button id="payButton">Pay ₹0</button>
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
